@@ -1,4 +1,4 @@
-from logreg import LogisticRegression
+from sklearn.neural_network import MLPClassifier
 from random import shuffle
 import numpy as np
 import scipy as sp
@@ -26,8 +26,7 @@ train_set = set[:train_rows]
 test_set = set[train_rows:rows]
 train_answers = answers[:train_rows]
 test_answers = answers[train_rows:rows]
-new_classifier = LogisticRegression()
-new_classifier.fit(X = train_set, y = train_answers, max_iters = 1000)
+new_classifier = MLPClassifier().fit(X = train_set, y = train_answers);
 #train_errors = np.sum(new_classifier.predict(train_set) != train_answers)
 #print ('%f percent errors in the train set. (Using your own train set fot testing is cheating, but you probably dont care anyway)' % (train_errors * 100.0 / len(test_set)))
 test_errors = np.sum(new_classifier.predict(test_set) != test_answers)
@@ -38,6 +37,10 @@ FP = sp.sum(new_classifier.predict(test_set) * (1 - test_answers))
 FN = sp.sum((1 - new_classifier.predict(test_set)) * test_answers)
 Sensitivity = TP / (TP + FN)
 Specitivity = TN / (TN + FP)
+Precision = TP / (TP + FP)
+F1 = 2 * Precision * Sensitivity / (Precision + Sensitivity)
 print ('%d true positives, %d true negatives' % (TP, TN))
 print ('%d false positives, %d false negatives' % (FP, FN))
 print ('Sensitivity: %f, Specitivity: %f' % (Sensitivity, Specitivity))
+print ('Precision: %f, Recall: %f' % (Precision, Sensitivity))
+print ('F1: %f' % F1)
