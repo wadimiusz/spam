@@ -1,11 +1,10 @@
 from sklearn.neural_network import MLPClassifier
-from random import shuffle
 import numpy as np
 import scipy as sp
 f = open('spambase/spambase.data', 'r')
 strings = f.read().split('\n')[0:-1]
 f.close()
-shuffle(strings)
+np.random.shuffle(strings)
 rows = len(strings)
 columns = len(strings[0].split(',')) - 1
 set = sp.zeros((rows, columns))
